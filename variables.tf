@@ -29,3 +29,40 @@ variable "enforcer_version" {
   type        = string
   default     = "2022.4"
 }
+
+variable "platform" {
+  description = "Orchestration platform name"
+  type        = string
+  default     = "eks"
+}
+
+variable "enabled_express_mode" {
+  description = "Install enforcer in EXPRESS MODE or not"
+  type        = bool
+  default     = true
+}
+
+# variable "aqua_gateway_endpoint" {
+#   description = "Aqua Gateway Endpoint"
+#   type        = string
+#   default     = "293e75e127-gw.cloud.aquasec.com"
+# }
+
+# variable "aquasec_username" {
+#   description = "aqua cloud username - Value set in Variables"
+#   type        = string
+#   sensitive   = true
+#   default     = ""
+# }
+
+# variable "aquasec_password" {
+#   description = "aqua cloud password - Value set in Variables"
+#   type        = string
+#   sensitive   = true
+#   default     = ""
+# }
+
+validation {
+  condition     = can(regex("^aks$|^eks$|^gke$|^openshift$|^tkg$|^tkgi$|^k8s$|^rancher$|^gs$|^k3s$", var.platform))
+  error_message = "Err: invalid platform, must be one of aks|eks|gke|openshift|tkg|tkgi|k8s|rancher|gs|k3s."
+}

@@ -3,7 +3,7 @@
 ### ################ ###
 
 global:
-  platform: "k8s"
+  platform: ${platform}
   enforcer:
     enabled: true
   gateway:
@@ -63,7 +63,7 @@ resources:
 enforcer:
   # Enter the enforcer token in "clear-text" format without quotes generated from the Console UI #
   enforcerToken: ${enforcer_token} # POV to Update. E.g. 2af8dbb2-f1a2-4212-b343-5f8cfce93a5e
-  expressMode: true
+  expressMode: ${enabled_express_mode}
 
   # Required for AWS Bottlerocket --> privileged mode and SELinux
   securityContext:
