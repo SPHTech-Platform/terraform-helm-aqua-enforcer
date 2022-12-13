@@ -34,6 +34,11 @@ variable "platform" {
   description = "Orchestration platform name"
   type        = string
   default     = "eks"
+
+  validation {
+    condition     = can(regex("^aks$|^eks$|^gke$|^openshift$|^tkg$|^tkgi$|^k8s$|^rancher$|^gs$|^k3s$", var.platform))
+    error_message = "Err: invalid platform, must be one of aks|eks|gke|openshift|tkg|tkgi|k8s|rancher|gs|k3s."
+  }
 }
 
 variable "enabled_express_mode" {
@@ -42,27 +47,26 @@ variable "enabled_express_mode" {
   default     = true
 }
 
-# variable "aqua_gateway_endpoint" {
-#   description = "Aqua Gateway Endpoint"
-#   type        = string
-#   default     = "293e75e127-gw.cloud.aquasec.com"
-# }
+variable "aqua_gateway_endpoint" {
+  description = "Aqua Gateway Endpoint"
+  type        = string
+  default     = "293e75e127-gw.cloud.aquasec.com"
+}
 
-# variable "aquasec_username" {
-#   description = "aqua cloud username - Value set in Variables"
-#   type        = string
-#   sensitive   = true
-#   default     = ""
-# }
+variable "aquasec_username" {
+  description = "aqua cloud username - Value set in Variables"
+  type        = string
+  sensitive   = true
+}
 
-# variable "aquasec_password" {
-#   description = "aqua cloud password - Value set in Variables"
-#   type        = string
-#   sensitive   = true
-#   default     = ""
-# }
+variable "aquasec_password" {
+  description = "aqua cloud password - Value set in Variables"
+  type        = string
+  sensitive   = true
+}
 
-validation {
-  condition     = can(regex("^aks$|^eks$|^gke$|^openshift$|^tkg$|^tkgi$|^k8s$|^rancher$|^gs$|^k3s$", var.platform))
-  error_message = "Err: invalid platform, must be one of aks|eks|gke|openshift|tkg|tkgi|k8s|rancher|gs|k3s."
+variable "cluster_name" {
+  description = "Cluster name registered with Aqua in Infrastructure tab"
+  type        = string
+  default     = "aqua-sec"
 }

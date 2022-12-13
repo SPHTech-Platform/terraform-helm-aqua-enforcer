@@ -8,7 +8,7 @@ global:
     enabled: true
   gateway:
     # change address to gateway endpoint
-    address: "" # POV to Update. E.g. cxxx651191-gw.cloud.aquasec.com
+    address: ${aqua_gateway_endpoint} # POV to Update. E.g. cxxx651191-gw.cloud.aquasec.com
     port: 443 # 443 for SaaS // 8443 for self-hosted
   # Specifies the secret data for imagePullSecrets needed to fetch the private docker images
   imageCredentials:
@@ -16,8 +16,8 @@ global:
     name: "aqua-registry"
     repositoryUriPrefix: "registry.aquasec.com" # for dockerhub - "docker.io"
     registry: "registry.aquasec.com" #REQUIRED only if create is true, for dockerhub - "index.docker.io/v1/"
-    username: "" # POV to Update. E.g. user@aquasec.com
-    password: "" # POV to Update
+    username: ${aquasec_username} # POV to Update. E.g. user@aquasec.com
+    password: ${aquasec_password} # POV to Update
 
 serviceAccount:
   create: true
@@ -35,7 +35,7 @@ image:
   pullPolicy: Always
 
 # Display a custom cluster name in the infrastructure tab of Aqua Enterprise
-clusterName: "" # POV to Update. E.g. AWS-Bottlerocket-Cluster-1
+clusterName: ${cluster_name} # POV to Update. E.g. AWS-Bottlerocket-Cluster-1
 
 certsSecret:
   autoGenerate: true
