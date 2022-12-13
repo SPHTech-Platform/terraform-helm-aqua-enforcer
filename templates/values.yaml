@@ -349,7 +349,8 @@ kubeEnforcerAdvance:
         # true to enable secure communication between Aqua Envoy and Gateways
         enabled: false
         # provide secret name containing the certificates
-        secretName: "envoy-mtls-certs"
+        secretName: ""
+        # secretName: "envoy-mtls-certs"
         # provide filename of the public key in the secret eg: aqua-lb.crt
         publicKey_fileName: ""
         # provide filename of the private key in the secret eg: aqua-lb.key
