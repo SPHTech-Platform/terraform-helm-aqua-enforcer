@@ -53,8 +53,8 @@ resources:
   limits:
     cpu: 100m
     memory: 128Mi
-  
-  
+
+
 
 ### ############# ###
 ### Aqua Enforcer ###
@@ -65,7 +65,7 @@ enforcer:
   enforcerToken: ${enforcer_token} # POV to Update. E.g. 2af8dbb2-f1a2-4212-b343-5f8cfce93a5e
   expressMode: true
 
-  # Required for AWS Bottlerocket --> privileged mode and SELinux 
+  # Required for AWS Bottlerocket --> privileged mode and SELinux
   securityContext:
     privileged: true
     seLinuxOptions:
@@ -94,7 +94,7 @@ enforcer:
     repository: enforcer
     tag: ${enforcer_version}
     pullPolicy: Always
-    
+
   resources:
     requests:
       cpu: 100m
