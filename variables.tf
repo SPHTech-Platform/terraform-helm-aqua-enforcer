@@ -50,7 +50,6 @@ variable "enabled_express_mode" {
 variable "aqua_gateway_endpoint" {
   description = "Aqua Gateway Endpoint"
   type        = string
-  default     = "293e75e127-gw.cloud.aquasec.com"
 }
 
 variable "aquasec_username" {
