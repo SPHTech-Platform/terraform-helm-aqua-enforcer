@@ -1,0 +1,104 @@
+### ################ ###
+### Global Variables ###
+### ################ ###
+
+global:
+  platform: ${platform}
+  enforcer:
+    enabled: true
+  gateway:
+    # change address to gateway endpoint
+    address: ${aqua_gateway_endpoint} # POV to Update. E.g. cxxx651191-gw.cloud.aquasec.com
+    port: 443 # 443 for SaaS // 8443 for self-hosted
+  # Specifies the secret data for imagePullSecrets needed to fetch the private docker images
+  imageCredentials:
+    create: true
+    name: "aqua-registry"
+    repositoryUriPrefix: "registry.aquasec.com" # for dockerhub - "docker.io"
+    registry: "registry.aquasec.com" #REQUIRED only if create is true, for dockerhub - "index.docker.io/v1/"
+    username: ${aquasec_username} # POV to Update. E.g. user@aquasec.com
+    password: ${aquasec_password} # POV to Update
+
+serviceAccount:
+  create: true
+
+
+
+### ############# ###
+### Kube Enforcer ###
+### ############# ###
+
+# Kube-Enforcer Image
+image:
+  repository: "kube-enforcer"
+  tag: ${enforcer_version}
+  pullPolicy: Always
+
+# Display a custom cluster name in the infrastructure tab of Aqua Enterprise
+clusterName: ${cluster_name} # POV to Update. E.g. AWS-Bottlerocket-Cluster-1
+
+certsSecret:
+  autoGenerate: true
+
+aquaSecret:
+  create: true
+  name: "aqua-kube-enforcer-token"
+  # Enter the enforcer token in "clear-text" format without quotes generated from the Console UI #
+  kubeEnforcerToken: ${kube_enforcer_token} # POV to Update. E.g. 2af8dbb2-f1a2-4212-b343-5f8cfce93a5e
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 100m
+    memory: 128Mi
+
+
+
+### ############# ###
+### Aqua Enforcer ###
+### ############# ###
+
+enforcer:
+  # Enter the enforcer token in "clear-text" format without quotes generated from the Console UI #
+  enforcerToken: ${enforcer_token} # POV to Update. E.g. 2af8dbb2-f1a2-4212-b343-5f8cfce93a5e
+  expressMode: ${enabled_express_mode}
+
+  # Required for AWS Bottlerocket --> privileged mode and SELinux
+  securityContext:
+    privileged: true
+    seLinuxOptions:
+      user: system_u
+      role: system_r
+      type: super_t
+      level: s0
+    capabilities:
+      add:
+        - SYS_ADMIN
+        - NET_ADMIN
+        - NET_RAW
+        - SYS_PTRACE
+        - KILL
+        - MKNOD
+        - SETGID
+        - SETUID
+        - SYS_MODULE
+        - AUDIT_CONTROL
+        - SYSLOG
+        - SYS_CHROOT
+        - SYS_RESOURCE
+        - IPC_LOCK
+
+  image:
+    repository: enforcer
+    tag: ${enforcer_version}
+    pullPolicy: Always
+
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 100m
+      memory: 128Mi
