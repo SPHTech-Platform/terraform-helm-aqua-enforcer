@@ -19,9 +19,10 @@ locals {
 }
 
 resource "aquasec_enforcer_groups" "agent" {
-  group_id = "${var.enforcer_group_id_prefix}-agent"
-  type     = "agent"
-  enforce  = true
+  group_id       = "${var.enforcer_group_id_prefix}-agent"
+  type           = "agent"
+  enforce        = true
+  host_assurance = true
   orchestrator {
     type      = "kubernetes"
     namespace = var.helm_config_defaults.namespace
@@ -29,9 +30,10 @@ resource "aquasec_enforcer_groups" "agent" {
 }
 
 resource "aquasec_enforcer_groups" "kube_enforcer" {
-  group_id = "${var.enforcer_group_id_prefix}-kube-enforcer"
-  type     = "kube_enforcer"
-  enforce  = true
+  group_id       = "${var.enforcer_group_id_prefix}-kube-enforcer"
+  type           = "kube_enforcer"
+  enforce        = true
+  host_assurance = true
   orchestrator {
     type      = "kubernetes"
     namespace = var.helm_config_defaults.namespace
